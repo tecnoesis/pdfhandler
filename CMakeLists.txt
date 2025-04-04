@@ -17,7 +17,6 @@ add_executable(pdfhandler
 target_include_directories(pdfhandler 
                                 PRIVATE ${POPPLER_DIR}/cpp
                                 PRIVATE ${POPPLER_DIR}/build/cpp
-                                PRIVATE ${POPPLER_DIR}/build/cpp/poppler-cpp_verify_interface_header_sets
                             )
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug") # CMAKE_BUILD_TYPE is empty by default. To link against Debug Qt explicitly set: -DCMAKE_BUILD_TYPE Debug
@@ -27,7 +26,6 @@ else()
     set(POPPLER_BIN_DIR ${POPPLER_DIR}/build/Release)
     set(POPPLER_CPP_BIN_DIR ${POPPLER_DIR}/build/cpp/Release)
 endif()
-set(QT_BIN_DIR "${QT_INSTALL_DIR}/bin")
 
 # Set path to libraries to be linked (poppler-cpp.lib and poppler.lib):
 target_link_directories(pdfhandler 
@@ -37,8 +35,8 @@ target_link_directories(pdfhandler
 
 # Links with poppler-cpp.lib and poppler.lib
 target_link_libraries(pdfhandler
-                        PRIVATE poppler-cpp
                         PRIVATE poppler
+                        PRIVATE poppler-cpp
                     )
 
 # Tecnoesis project root directory
@@ -83,8 +81,4 @@ if(MSVC)
     
 endif()
 
-
-
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-                            
