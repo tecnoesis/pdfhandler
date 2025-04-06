@@ -10,8 +10,6 @@ int main(int argc, char *argv[]) {
     if(argc<1) {
         return 0;
     }
-    std::cerr << "file: " << argv[1] << std::endl;
-
     // Load the PDF document
     std::string filePath = argv[1];
     std::unique_ptr<poppler::document> pdfDoc(poppler::document::load_from_file(filePath));
