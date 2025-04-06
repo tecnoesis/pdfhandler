@@ -26,6 +26,8 @@ int main(int argc, char *argv[]) {
     bool newpar = true;
     Paragraph *par = nullptr;
 
+    std::vector<Paragraph> all_paragraphs;
+
     for (int pageIndex = 0; pageIndex < pdfDoc->pages(); ++pageIndex) {
         std::unique_ptr<poppler::page> page(pdfDoc->create_page(pageIndex));
         if (!page) {
@@ -68,9 +70,13 @@ int main(int argc, char *argv[]) {
             par->append(word);
         }
         if(par) {
-            std::cout << "New Paragraph: " << par->toJsonString() << std::endl << std::endl;
+            // std::cout << "New Paragraph: " << par->toJsonString() << std::endl << std::endl;
             par = nullptr; // New paragraph after new page!
         }
+        
+        all_paragraphs.insert(all_paragraphs.end(), paragraphs.begin(), paragraphs.end());
+        json j = all_paragraphs;
+        std::cout << j.dump(4);
     }
 
     return 0;
