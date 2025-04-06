@@ -33,8 +33,6 @@ int main(int argc, char *argv[]) {
             continue;
         }
 
-        std::cout << "Page " << pageIndex + 1 << ":" << std::endl;
-
         // Extract text blocks (Paragraphs) with their bounding boxes
         auto textBlocks = page->text_list();
 
