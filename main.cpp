@@ -42,13 +42,30 @@ int main(int argc, char *argv[]) {
 
             poppler::byte_array bytetext = textItem.text().to_utf8();
 
-            std::string word(bytetext.begin(), bytetext.end());
+            // std::string word(bytetext.begin(), bytetext.end());
+            std::string word(bytetext.data(), bytetext.size());
+
+            // // Convert poppler::byte_array to std::wstring
+            // poppler::byte_array wbytetext = textItem.text().to_utf16();
+            // std::wstring wstringData(reinterpret_cast<const wchar_t*>(wbytetext.data()), wbytetext.size() / sizeof(wchar_t));
+            // // Print the wstring content
+            // std::wcout << L"Wide string content: " << wstringData << std::endl;
 
             auto bbox = textItem.bbox(); // Bounding box
 
             if( !par || !par->belongs(textItem) ) {
                 if(par) {
-                    std::cout << "New Paragraph: " << par->toJsonString() << std::endl << std::endl;
+                    json j = *par;
+                    std::cout << j.dump(4) << std::flush;
+
+                    // ack
+                    std::string acknowledgment;
+                    std::getline(std::cin, acknowledgment);
+                    if (acknowledgment != "ACK") {
+                        std::cerr << "No acknowledgment received!" << std::endl;
+                        return 1;
+                    }
+
                 }
                 paragraphs.emplace_back(Paragraph(pageIndex, bbox));
                 par = &paragraphs.back();
@@ -61,9 +78,9 @@ int main(int argc, char *argv[]) {
             par = nullptr; // New paragraph after new page!
         }
         
-        all_paragraphs.insert(all_paragraphs.end(), paragraphs.begin(), paragraphs.end());
-        json j = all_paragraphs;
-        std::cout << j.dump(4);
+        // all_paragraphs.insert(all_paragraphs.end(), paragraphs.begin(), paragraphs.end());
+        // json j = all_paragraphs;
+        // std::cout << j.dump(4);
     }
 
     return 0;
