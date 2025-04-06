@@ -50,14 +50,6 @@ int main(int argc, char *argv[]) {
 
             auto bbox = textItem.bbox(); // Bounding box
 
-            // std::cout << "Bounding Box: (" 
-            //           << bbox.left() << ", " 
-            //           << bbox.top() << ", " 
-            //           << bbox.right() << ", " 
-            //           << bbox.bottom() << ")" << std::endl;
-            // std::cout << "word: " << word << std::endl;
-            // std::cout << "----------------------------------------" << std::endl;
-
             if( !par || !par->belongs(textItem) ) {
                 if(par) {
                     std::cout << "New Paragraph: " << par->toJsonString() << std::endl << std::endl;
@@ -70,7 +62,6 @@ int main(int argc, char *argv[]) {
             par->append(word);
         }
         if(par) {
-            // std::cout << "New Paragraph: " << par->toJsonString() << std::endl << std::endl;
             par = nullptr; // New paragraph after new page!
         }
         
