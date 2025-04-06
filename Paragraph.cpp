@@ -47,7 +47,7 @@ void Paragraph::expand(const poppler::text_box &textItem)
     }
 }
 
-std::string Paragraph::toString() const {
+std::string Paragraph::wordsToString() const {
 
     std::string par;
 
@@ -55,4 +55,19 @@ std::string Paragraph::toString() const {
         par += word + ' ';
     }
     return par;
+}
+
+void to_json(json& j, const Paragraph& p) {
+    j = json{ {"page", p.m_page}, {"text", p.wordsToString()}, {"bbox", BBox(p.m_bbox)} };
+}
+
+void to_json(json& j, const BBox& b)
+{
+    j = json{ {"x", b.m_x}, {"y", b.m_y}, {"width", b.m_width}, {"height", b.m_height} };
+}
+
+std::string Paragraph::toJsonString() const 
+{
+    json j = *this;
+    return j.dump(4);
 }

@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(DEV_ROOT_DIR "D:/development")
 set(POPPLER_DIR ${DEV_ROOT_DIR}/poppler)
+set(NLOHMAN_JSON_INC_DIR "D:/development/json/include")
 
 # Add the executable
 add_executable(pdfhandler 
@@ -17,6 +18,7 @@ add_executable(pdfhandler
 target_include_directories(pdfhandler 
                                 PRIVATE ${POPPLER_DIR}/cpp
                                 PRIVATE ${POPPLER_DIR}/build/cpp
+                                PRIVATE ${NLOHMAN_JSON_INC_DIR}
                             )
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug") # CMAKE_BUILD_TYPE is empty by default. To link against Debug Qt explicitly set: -DCMAKE_BUILD_TYPE Debug

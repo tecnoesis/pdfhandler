@@ -5,10 +5,17 @@
 #include "Paragraph.h"
 
 
-int main() {
+int main(int argc, char *argv[]) {
+
+    if(argc<1) {
+        return 0;
+    }
+    std::cerr << "file: " << argv[1] << std::endl;
+
     // Load the PDF document
-    std::string filePath = "D:\\from_linux\\sample_documents\\doc_with_sciences.pdf";
+    std::string filePath = argv[1];
     std::unique_ptr<poppler::document> pdfDoc(poppler::document::load_from_file(filePath));
+
     if (!pdfDoc) {
         std::cerr << "Failed to open PDF file: " << filePath << std::endl;
         return 1;
@@ -51,7 +58,7 @@ int main() {
 
             if( !par || !par->belongs(textItem) ) {
                 if(par) {
-                    std::cout << "New Paragraph: " << par->toString() << std::endl << std::endl;
+                    std::cout << "New Paragraph: " << par->toJsonString() << std::endl << std::endl;
                 }
                 paragraphs.emplace_back(Paragraph(pageIndex, bbox));
                 par = &paragraphs.back();
@@ -61,7 +68,7 @@ int main() {
             par->append(word);
         }
         if(par) {
-            std::cout << "New Paragraph: " << par->toString() << std::endl << std::endl;
+            std::cout << "New Paragraph: " << par->toJsonString() << std::endl << std::endl;
             par = nullptr; // New paragraph after new page!
         }
     }

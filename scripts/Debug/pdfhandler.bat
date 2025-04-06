@@ -8,6 +8,6 @@ SET POPPLERCPPPATH=%POPPLERROOT%\build\cpp\Debug
 
 SET PATH=%PATH%;%POPPLERPATH%;%POPPLERCPPPATH%
 
-%~dp0\pdfhandler.exe
+%~dp0\pdfhandler.exe  %*
 
 ENDLOCAL
