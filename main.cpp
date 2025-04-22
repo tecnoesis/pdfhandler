@@ -2,16 +2,24 @@
 #include <poppler-page.h>
 #include <iostream>
 #include <memory>
+#include <string>
+#include <locale>
+#include <codecvt>
 #include "Paragraph.h"
 
 
-int main(int argc, char *argv[]) {
+int wmain(int argc, wchar_t *argv[]) {
+
+    // Set the locale to handle wide characters
+    std::locale::global(std::locale(""));
 
     if(argc<2) {
         return 0;
     }
     // Load the PDF document
-    std::string filePath = argv[1];
+    std::wstring filePathWstr = argv[1];
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+    std::string filePath = converter.to_bytes(filePathWstr);
     std::unique_ptr<poppler::document> pdfDoc(poppler::document::load_from_file(filePath));
 
     if (!pdfDoc) {
